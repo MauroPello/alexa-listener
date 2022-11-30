@@ -17,15 +17,14 @@ def alexa_listener():
             # shutdown pc
             os.system("qdbus org.kde.ksmserver /KSMServer logout 0 2 0")
             return "success"
-        case "open-yt":
-            # query you tube
-            query = request.args.get("query")
-            print(query)
+        case "volume-up":
+            os.system("pulseaudio-ctl up 10")
             return "success"
-        case "open-ap":
-            # query amazon prime  
-            query = request.args.get("query")
-            print(query)
+        case "volume-down":
+            os.system("pulseaudio-ctl down 10")
+            return "success"
+        case "toggle":
+            os.system("playerctl play-pause -a")
             return "success"
         case _:
             return "Error, action not supported!"
