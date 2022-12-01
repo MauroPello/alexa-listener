@@ -8,7 +8,7 @@ def alexa_listener():
     # checking if key is correct
     key = request.args.get("key")
     if key != "ciao35392ahgjai3":
-        return "Error, wrong key!", 401
+        return "Hai sbagliato password!", 401
     
     match request.args.get("action"):
         case "shutdown":
@@ -16,15 +16,15 @@ def alexa_listener():
             os.system("bluetoothctl disconnect 82:49:69:CC:D1:00")
             # shutdown pc
             os.system("qdbus org.kde.ksmserver /KSMServer logout 0 2 0")
-            return "Success!", 200
+            return "Ok!", 200
         case "volume-up":
             os.system("pulseaudio-ctl up 10")
-            return "Success!", 200
+            return "ok!", 200
         case "volume-down":
             os.system("pulseaudio-ctl down 10")
-            return "Success!", 200
+            return "Ok!", 200
         case "toggle":
             os.system("playerctl play-pause")
-            return "Success!", 200
+            return "Ok!", 200
         case _:
-            return "Error, action not supported!", 400
+            return "Non ho capito il comando!", 400
