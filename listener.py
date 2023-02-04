@@ -37,6 +37,13 @@ def alexa_listener():
             query = request.args.get("query")
             if not query:
                 return "Non hai fornito nessun video da cercare!", 401
+            if "video dopo" in query.lower():
+                os.system("xdotool key --window $(xdotool search --name \"YouTube\") shift+n")
+                os.system("playerctl next")
+                return "Ok!", 200
+            if "video prima" in query.lower():
+                os.system("playerctl previous")
+                return "Ok!", 200
 
             # cerca e riproduci video
             yt_request = service.search().list(
@@ -48,7 +55,7 @@ def alexa_listener():
             link = "https://youtu.be/" + yt_response['items'][0]['id']['videoId']
 
             os.system(f"google-chrome-stable \"{link}\" &")
-            os.system(f"sleep 3 && xdotool search --name \"{query}\" windowactivate mousemove 2500 1000 click --repeat 2 1")
+            os.system(f"sleep 3 && xdotool search --name \"YouTube\" windowactivate mousemove 2500 1000 click --repeat 2 1")
 
             return "Ok!", 200
         case "video-ap":
