@@ -1,12 +1,6 @@
 import os
-from Google import Create_Service
 from flask import Flask, request
 
-CLIENT_SECRET_FILE = 'client_secret.json'
-API_NAME = 'youtube'
-API_VERSION = 'v3'
-SCOPES = ['https://www.googleapis.com/auth/youtube']
-service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 app = Flask(__name__)
 
 @app.get("/alexa-listener")
@@ -47,16 +41,8 @@ def alexa_listener():
                 return "Ok!", 200
 
             # cerca e riproduci video
-            yt_request = service.search().list(
-                part="id",
-                maxResults=1,
-                q=query
-            )
-            yt_response = yt_request.execute()
-            link = "https://youtu.be/" + yt_response['items'][0]['id']['videoId']
-
-            os.system(f"google-chrome-stable \"{link}\" &")
-            os.system(f"sleep 3 && xdotool search --name \"YouTube\" windowactivate mousemove 2500 1000 click --repeat 2 1")
+            os.system(f"google-chrome-stable \"https://www.youtube.com/results?search_query={query.replace(' ', '+')}&sp=EgIQAQ%253D%253D\" &")
+            os.system(f"sleep 5 && xdotool search --name \"YouTube\" windowactivate mousemove 2500 400 click 1 && sleep 3 && xdotool key F")
 
             return "Ok!", 200
         case "video-ap":
