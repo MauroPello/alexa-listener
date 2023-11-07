@@ -15,6 +15,8 @@ def alexa_listener():
             os.system("pkill -INT chrome")
             # disconnect stereo bluetooth
             os.system("bluetoothctl disconnect 82:49:69:CC:D1:00")
+            # quit albert
+            os.system("albert quit")
             # shutdown pc
             # os.system("qdbus org.kde.ksmserver /KSMServer logout 0 2 0")
             os.system("shutdown now")
