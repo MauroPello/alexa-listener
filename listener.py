@@ -30,17 +30,17 @@ def alexa_listener():
         case "toggle":
             os.system("xdotool key XF86AudioPlay")
             return "Ok!", 200
+        case "next-video":
+            os.system("xdotool key --window $(xdotool search --name \"YouTube\") shift+n")
+            os.system("xdotool key XF86AudioNext")
+            return "Ok!", 200
+        case "previous-video":
+            os.system("xdotool key XF86AudioPrev")
+            return "Ok!", 200
         case "video-yt":
             query = request.args.get("query")
             if not query:
                 return "Non hai fornito nessun video da cercare!", 401
-            if "video dopo" in query.lower():
-                os.system("xdotool key --window $(xdotool search --name \"YouTube\") shift+n")
-                os.system("xdotool key XF86AudioNext")
-                return "Ok!", 200
-            if "video prima" in query.lower():
-                os.system("xdotool key XF86AudioPrev")
-                return "Ok!", 200
 
             # cerca e riproduci video
             os.system(f"google-chrome-stable \"https://www.youtube.com/results?search_query={query.replace(' ', '+')}&sp=EgIQAQ%253D%253D\" &")
